@@ -2,7 +2,7 @@ const {Router}=require('express');
 const passport=require('passport');4
 const bcrypt =require('bcrypt')
 const { User } = require('../models/user');
-
+const { Cart } = require('../models/cart');
 
 const route=Router()
 
@@ -71,4 +71,4 @@ route.get('/failure',(req,res)=>{
 
 
 
-module.exports={route}
+module.exports=route

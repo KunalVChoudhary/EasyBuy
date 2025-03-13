@@ -2,7 +2,7 @@ require('dotenv').config();
 const passport = require('passport');
 const { Strategy } = require('passport-google-oauth20');
 const { User } = require('../models/user.js');
-
+const { Cart } = require('../models/cart.js');
 
 passport.use(new Strategy({
     clientID: process.env.GOOGLE_CLIENT_ID,

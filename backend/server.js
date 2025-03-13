@@ -5,7 +5,8 @@ const session=require('express-session')
 const passport=require('passport')
 const {seedingDatabase}= require('./seedDatabase.js');
 const MongoStore = require('connect-mongo');
-const { route } = require('./routes/authentication.js');
+const route1 = require('./routes/authentication.js');
+const route2 = require('./routes/cart.js')
 const cookieParser = require('cookie-parser');
 require('./strategies/googleOauth.js')
 require('./strategies/localAuth.js')
@@ -38,11 +39,14 @@ app.use(passport.session())
 
 app.get('/',(req,res)=>{
     if (!req.isAuthenticated()) return res.status(401).json({ message: 'Not authorized' });
-    res.json({ message: `Welcome, ${req.user.name}!`, user: req.user });
+    return res.json({ message: `Welcome, ${req.user.name}!`, user: req.user });
 })
 
+app.get('/as',(req,res)=>{
+    return res.json(req.user)
+})
+app.use('/',route1,route2)
 
-app.use('/',route)
 
 const PORT = process.env.PORT;
 app.listen(PORT,()=>{console.log('Server Started');})
