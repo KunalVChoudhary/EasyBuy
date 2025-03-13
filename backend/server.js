@@ -1,19 +1,48 @@
 require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
-const {seedingDatabase}= require('./seedDatabase.js')
-
+const session=require('express-session')
+const passport=require('passport')
+const {seedingDatabase}= require('./seedDatabase.js');
+const MongoStore = require('connect-mongo');
+const { route } = require('./routes/authentication.js');
+const cookieParser = require('cookie-parser');
+require('./strategies/googleOauth.js')
+require('./strategies/localAuth.js')
 const app=express();
-console.log(process.env.MONGO_URL);
 
+//Mongoose Connection
 mongoose.connect(process.env.MONGO_URL).then(()=>{
-    seedingDatabase();
-    console.log('MongoDB connected from server');})
+    seedingDatabase();})
 
-const PORT = process.env.PORT;
-
+//middleware
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
+app.use(cookieParser('i am cookie-parser for easybuy'))
+app.use(session({
+    secret: 'i am easybuy session middleware',
+    resave:false,
+    saveUninitialized:false,
+    cookie:{
+        maxAge:600000,
+        httpOnly:true
+    },
+    store:MongoStore.create({
+        client: mongoose.connection.getClient(),
+    })
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 
+app.get('/',(req,res)=>{
+    if (!req.isAuthenticated()) return res.status(401).json({ message: 'Not authorized' });
+    res.json({ message: `Welcome, ${req.user.name}!`, user: req.user });
+})
+
+
+app.use('/',route)
+
+const PORT = process.env.PORT;
 app.listen(PORT,()=>{console.log('Server Started');})
