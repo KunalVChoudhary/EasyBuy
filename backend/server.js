@@ -7,6 +7,7 @@ const {seedingDatabase}= require('./seedDatabase.js');
 const MongoStore = require('connect-mongo');
 const route1 = require('./routes/authentication.js');
 const route2 = require('./routes/cart.js')
+const route3 =require('./routes/review.js')
 const cookieParser = require('cookie-parser');
 require('./strategies/googleOauth.js')
 require('./strategies/localAuth.js')
@@ -25,7 +26,7 @@ app.use(session({
     resave:false,
     saveUninitialized:false,
     cookie:{
-        maxAge:600000,
+        maxAge:6000000,
         httpOnly:true
     },
     store:MongoStore.create({
@@ -45,7 +46,7 @@ app.get('/',(req,res)=>{
 app.get('/as',(req,res)=>{
     return res.json(req.user)
 })
-app.use('/',route1,route2)
+app.use('/',route1,route2,route3)
 
 
 const PORT = process.env.PORT;
