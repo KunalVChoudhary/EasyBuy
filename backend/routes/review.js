@@ -5,7 +5,7 @@ const { User } = require('../models/user')
 
 const route=Router()
 
-route.post('/:productId',async(req,res)=>{
+route.post('/review/:productId',async(req,res)=>{
     try {
     const productId=req.params.productId;
     const product=await Product.findOne({productId})
@@ -23,7 +23,7 @@ route.post('/:productId',async(req,res)=>{
     }
 })
 
-route.get('/:productId',async (req,res)=>{
+route.get('/review/:productId',async (req,res)=>{
     try {const productId=req.params.productId;
     const product=await Product.findOne({productId})   
     const reviews=await Review.find({productId:product.id})
