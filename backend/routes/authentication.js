@@ -6,7 +6,7 @@ const { Cart } = require('../models/cart');
 
 const route=Router()
 
-route.post('/signup',async(req,res)=>{
+route.post('/auth/signup',async(req,res)=>{
     try{
         const {email,name,password}=req.body;
         let user= await User.findOne({email});
@@ -26,7 +26,7 @@ route.post('/signup',async(req,res)=>{
     }
 })
 
-route.post('/signin', (req, res, next) => {
+route.post('/auth/signin', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if (err) return next(err);
         if (!user) {
@@ -62,7 +62,7 @@ route.get('/signout',(req,res)=>{
     });
 });
 
-route.get('/failure',(req,res)=>{
+route.get('/auth/failure',(req,res)=>{
     let message;
     {req.query.message? message=req.query.message:message="server error"}
     res.json({message})
