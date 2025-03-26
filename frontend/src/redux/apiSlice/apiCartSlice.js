@@ -17,7 +17,7 @@ export const cartApi= createApi({
             invalidatesTags:['getCart'],
             async onQueryStarted(item, { dispatch, queryFulfilled }) {
                 const postResult = dispatch(
-                  api.util.updateQueryData("getCartItems", undefined, (draft) => {
+                  cartApi.util.updateQueryData("getCartItems", undefined, (draft) => {
                     draft.unshift({...item });
                   }),
             )
@@ -37,7 +37,7 @@ export const cartApi= createApi({
             invalidatesTags:['getCart'],
             async onQueryStarted(item, { dispatch, queryFulfilled }) {
                 const patchResult = dispatch(
-                  api.util.updateQueryData("getCartItems", undefined, (items) => {
+                  cartApi.util.updateQueryData("getCartItems", undefined, (items) => {
                   const itemIndex=items.findIndex((element)=>element.productId===item.productId)
                   if (itemIndex !== -1) {
                     items[itemIndex] = { ...items[itemIndex], ...item };
@@ -60,7 +60,7 @@ export const cartApi= createApi({
             invalidatesTags:['getCart'],
             async onQueryStarted({productId},{dispatch,queryFulfilled}){
                 const deleteResult=dispatch(
-                    api.util.updateQueryData('getCartItems',undefined,(items)=>{
+                    cartApi.util.updateQueryData('getCartItems',undefined,(items)=>{
                         const itemIndex=items.findIndex((element)=>element.productId===productId)
                         if (itemIndex !== -1) {
                             items.splice(itemIndex, 1);
