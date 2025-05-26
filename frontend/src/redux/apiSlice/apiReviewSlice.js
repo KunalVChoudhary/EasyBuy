@@ -76,3 +76,5 @@ export const reviewApi= createApi({
         })
     })
 })
+
+export const {getProductReviews,postProductReview,updateProductReview,deleteProductReview}= reviewApi

@@ -52,3 +52,5 @@ export const wishListApi=createApi({
         })
     })
 })
+
+export const {getWishListItems,postWishListItem,deleteWishListItem} = wishListApi
