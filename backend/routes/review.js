@@ -36,7 +36,7 @@ route.get('/review/:productId',async (req,res)=>{
     }
 })
 
-route.put('/review/:reviewId',async (req,res)=>{
+route.patch('/review/:reviewId',async (req,res)=>{
     try{
         const reviewId=req.params.reviewId;
         const {rating,comment}=req.body;
