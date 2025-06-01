@@ -1,0 +1,55 @@
+.signup-page-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100dvh;
+    width: 100%;
+}
+
+.signup-page-container.light{
+    background-color: rgb(188, 202, 215);
+    color:  rgb(29, 28, 28);
+}
+
+.signup-page-container.dark{
+    background-color: black;
+    color: aliceblue;
+}
+
+.centered-container{
+    max-width: 100%;
+    width: 500px;
+    height: auto;
+}
+
+.centered-container.dark{
+    background-color: rgb(28, 28, 28);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+.centered-container.light{
+    background-color: aliceblue;
+    border-color: rgb(54, 55, 54) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+input:focus{
+    border: 3px solid rgb(255, 166, 2) !important;
+    box-shadow: none !important;
+}
+
+.btn.dark{
+    color: aliceblue;
+    background-color: black;
+}
+
+.btn.light{
+    background-color: rgb(233, 233, 233);
+    border-color: rgb(40, 40, 40) !important;
+}
+
+@media(max-width:700px){
+    .centered-container{
+        width: 90%;
+    }
+}

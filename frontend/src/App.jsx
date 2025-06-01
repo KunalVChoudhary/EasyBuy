@@ -1,8 +1,11 @@
 import './App.css'
+import Signup from './components/Signup/Signup'
 
 function App() {
   return (
-    <></>
+    <>
+      <Signup></Signup>
+    </>
   )
 }
 

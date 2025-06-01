@@ -1,0 +1,9 @@
+body.light{
+    background-color: aliceblue;
+    color:  rgb(29, 28, 28);
+}
+
+body.dark{
+    background-color: rgb(29, 28, 28);
+    color: aliceblue;
+}
