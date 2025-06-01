@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const session=require('express-session')
 const passport=require('passport')
 const {seedingDatabase}= require('./seedDatabase.js');
@@ -21,7 +22,14 @@ mongoose.connect(process.env.MONGO_URL).then(()=>{
 //middleware
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
+
 app.use(cookieParser('i am cookie-parser for easybuy'))
+
 app.use(session({
     secret: 'i am easybuy session middleware',
     resave:false,

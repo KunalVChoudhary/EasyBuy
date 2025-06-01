@@ -18,7 +18,7 @@ route.post('/auth/signup',async(req,res)=>{
             if (err) {
                 return res.status(500).json({ message: 'Login failed after registration' });
             }
-            res.redirect('/');
+            return res.status(200).json({ message: 'Login Successfull', user:name });
         });
     }
     catch{
@@ -47,8 +47,37 @@ route.get("/auth/google",
     passport.authenticate("google", { scope: ["profile", "email"], prompt:'select_account' })
 );
 
-route.get('/auth/google/pull',
-    passport.authenticate('google', { failureRedirect: '/failure',successRedirect:'/' }),);
+route.get('/auth/google/pull',(req, res, next) => {
+    passport.authenticate("google", (err, user, info) => {
+        if (err || !user) {
+            return res.send(`
+                <script>
+                    window.opener.postMessage({ success: false, message: 'Authentication failed' }, 'http://localhost:5173');
+                    window.close();
+                </script>
+            `);
+        }
+
+        req.logIn(user, (err) => {
+        if (err) {
+            return res.send(`
+                <script>
+                    window.opener.postMessage({ success: false, message: 'Login failed' }, 'http://localhost:5173');
+                    window.close();
+                </script>
+            `);
+        }
+
+        return res.send(`
+            <script>
+                window.opener.postMessage({ success: true, message: 'Authentication successful', user: ${JSON.stringify(user.name)} }, 
+                'http://localhost:5173');
+                window.close();
+            </script>
+        `);
+        });
+    })(req, res, next);
+})
 
 route.get('/signout',(req,res)=>{
     req.logout((err) => {
