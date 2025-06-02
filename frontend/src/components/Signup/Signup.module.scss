@@ -38,14 +38,18 @@ input:focus{
     box-shadow: none !important;
 }
 
-.btn.dark{
-    color: aliceblue;
-    background-color: black;
+.dark{
+    :global(.btn){
+       color: aliceblue;
+       background-color: black; 
+    }
 }
 
-.btn.light{
-    background-color: rgb(233, 233, 233);
-    border-color: rgb(40, 40, 40) !important;
+.light{
+    :global(.btn){
+        background-color: rgb(233, 233, 233);
+        border-color: rgb(40, 40, 40) !important;
+    }
 }
 
 @media(max-width:700px){

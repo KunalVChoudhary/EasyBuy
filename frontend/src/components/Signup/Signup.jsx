@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import './Signup.module.scss'
+import styles from './Signup.module.scss'
 
 function Signup() {
 
@@ -69,8 +69,8 @@ function Signup() {
 
   return (
     <>
-      <div className={`signup-page-container ${displayTheme}`}>
-        <div className={`centered-container d-flex p-3 border border-2 rounded-3 border-secondary-subtle flex-column ${displayTheme} `}>
+      <div className={`${styles['signup-page-container']} ${styles[displayTheme]}`}>
+        <div className={`${styles['centered-container']} d-flex p-3 border border-2 rounded-3 border-secondary-subtle flex-column ${styles[displayTheme]} `}>
           <form onSubmit={handleSubmission}  method='POST'>
 
             <div className='email-field mb-3'>
@@ -89,7 +89,7 @@ function Signup() {
             </div>
 
             <div className='submit-field mt-5 mb-3 d-flex justify-content-center'>
-              <button className={`submit-button btn w-50 border border-2 ${displayTheme}`} type='submit'>Continue</button>
+              <button className={`submit-button btn w-50 border border-2 ${styles[displayTheme]}`} type='submit'>Continue</button>
             </div>
 
           </form>
@@ -99,7 +99,7 @@ function Signup() {
           </div>
 
           <div className='google-auth-field mb-3 d-flex justify-content-center mt-3 mb-3'>
-              <button type="button" className={`google-auth-btn mb-3 btn w-75 border border-2 ${displayTheme}`} onClick={handleGoogleSubmission}>Signup using Google</button>
+              <button type="button" className={`google-auth-btn mb-3 btn w-75 border border-2 ${styles[displayTheme]}`} onClick={handleGoogleSubmission}>Signup using Google</button>
           </div>
 
         </div>
