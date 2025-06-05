@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import styles from './Signup.module.scss'
+import { setUserInfo } from '../../redux/createSlice/userInfoSlice'
 
 function Login() {
 
-  const displayTheme=useSelector((state)=>state.displayTheme)
+  const dispatch=useDispatch()
 
+  const displayTheme=useSelector((state)=>state.displayTheme)
 
   const [loginData,setLoginData]=useState({
     email:'',
@@ -33,6 +35,7 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         console.log("Success:", data);
+        dispatch(setUserInfo(data.user.name));
       } 
       else {
         const errorData = await response.json();
@@ -52,6 +55,7 @@ function Login() {
       const response=e.data;
       if (response.success){
         console.log("Success:", response);
+        dispatch(setUserInfo(response.user))
       }
       else{
         console.error('Signup failed:', response);
