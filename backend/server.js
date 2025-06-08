@@ -6,6 +6,7 @@ const session=require('express-session')
 const passport=require('passport')
 const {seedingDatabase}= require('./seedDatabase.js');
 const MongoStore = require('connect-mongo');
+const route0 = require('./routes/products.js');
 const route1 = require('./routes/authentication.js');
 const route2 = require('./routes/cart.js')
 const route3 = require('./routes/review.js')
@@ -46,16 +47,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-
-app.get('/',(req,res)=>{
-    if (!req.isAuthenticated()) return res.status(401).json({ message: 'Not authorized' });
-    return res.json({ message: `Welcome, ${req.user.name}!`, user: req.user });
-})
-
-app.get('/as',(req,res)=>{
-    return res.json(req.user)
-})
-app.use('/',route1,route2,route3,route4)
+app.use('/',route0,route1,route2,route3,route4)
 
 
 const PORT = process.env.PORT;
