@@ -2,69 +2,10 @@ import React from 'react'
 import {useDispatch,useSelector} from 'react-redux'
 import styles from './ProductCard.module.scss'
 
-export default function ProductCard(productDetail) {
-    //onclick on productCard not added,height and width fix of both productCard and carousel
+export default function ProductCard({productDetail}) {
+    //onclick on productCard not added
     // wishlist and cart onclick not added
-    // const productDetail={
-    //     "productId": 1,
-    //     "title": "Essence Mascara Lash Princess",
-    //     "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-    //     "category": "beauty",
-    //     "price": 9.99,
-    //     "discountPercentage": 7.17,
-    //     "rating": 4.94,
-    //     "stock": 5,
-    //     "tags": [
-    //         "beauty",
-    //         "mascara"
-    //     ],
-    //     "brand": "Essence",
-    //     "sku": "RCH45Q1A",
-    //     "weight": 2,
-    //     "dimensions": {
-    //         "width": 23.17,
-    //         "height": 14.43,
-    //         "depth": 28.01
-    //     },
-    //     "warrantyInformation": "1 month warranty",
-    //     "shippingInformation": "Ships in 1 month",
-    //     "availabilityStatus": "Low Stock",
-    //     "reviews": [
-    //         {
-    //             "rating": 2,
-    //             "comment": "Very unhappy with my purchase!",
-    //             "date": "2024-05-23T08:56:21.618Z",
-    //             "reviewerName": "John Doe",
-    //             "reviewerEmail": "john.doe@x.dummyjson.com"
-    //         },
-    //         {
-    //             "rating": 2,
-    //             "comment": "Not as described!",
-    //             "date": "2024-05-23T08:56:21.618Z",
-    //             "reviewerName": "Nolan Gonzalez",
-    //             "reviewerEmail": "nolan.gonzalez@x.dummyjson.com"
-    //         },
-    //         {
-    //             "rating": 5,
-    //             "comment": "Very satisfied!",
-    //             "date": "2024-05-23T08:56:21.618Z",
-    //             "reviewerName": "Scarlett Wright",
-    //             "reviewerEmail": "scarlett.wright@x.dummyjson.com"
-    //         }
-    //     ],
-    //     "returnPolicy": "30 days return policy",
-    //     "minimumOrderQuantity": 24,
-    //     "meta": {
-    //         "createdAt": "2024-05-23T08:56:21.618Z",
-    //         "updatedAt": "2024-05-23T08:56:21.618Z",
-    //         "barcode": "9164035109868",
-    //         "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
-    //     },
-    //     "images": [
-    //         "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png"
-    //     ],
-    //     "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png"
-    // }
+    console.log(productDetail);
 
     const displayTheme=useSelector(state=>state.displayTheme)
     
@@ -114,8 +55,8 @@ export default function ProductCard(productDetail) {
                     <div className={`${styles.productPriceContainer}card-text d-flex justify-content-between align-items-center`}>
                         <div className=''>
                             
-                            <img className={`${styles.starimg} me-1`} src={'images/wishlist-icon.png'} alt="wishlist" />
-                            <img className={`${styles.starimg} me-1`} src={'images/cart-icon.png'} alt="cart" />
+                            <img className={`${styles.starimg} mx-1`} src={'images/wishlist-icon.png'} alt="wishlist" />
+                            <img className={`${styles.starimg} mx-2`} src={`images/cart-${(displayTheme=='dark')?'light':'dark'}-icon.png`} alt="cart" />
                         </div>
                         <div className='d-flex align-items-end'>
                             <p className={`m-0 fs-5 fw-medium`}>${productDetail.price}</p>
