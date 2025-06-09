@@ -44,9 +44,9 @@ export default function Navbar(){
                     <div className={`${styles["wishlist-container"]} d-flex align-items-center p-2`}>
                         <img className={`d-inline px-2`} src="/images/wishlist-icon.png" alt="" />
                     </div>
-                    <div className={`${styles["cart-container"]} d-flex justify-content-center flex-column p-2`}>
+                    <div className={`${styles["cart-container"]} d-flex justify-content-center flex-column px-2 pb-2`}>
                         <p className={`d-inline px-2 m-0 text-center`}>589</p>
-                        <img className={`d-inline px-2`} src="/images/cart-icon.png" alt="" />
+                        <img className={`d-inline px-2`} src={`images/cart-dark-icon.png`} alt="" />
                     </div>
                     {!userName?
                         <div className={`${styles["Signup-Login-container"]} d-flex align-items-center px-3 py-2`}>
@@ -78,7 +78,7 @@ export default function Navbar(){
                     </div>
                     <div className={`${styles["cart-container"]} d-flex justify-content-center flex-column p-4`}>
                         <p className={`d-inline px-2 m-0 text-center`}>589</p>
-                        <img className={`d-inline px-2`} src="/images/cart-icon.png" alt="" />
+                        <img className={`d-inline px-2`} src={`images/cart-dark-icon.png`} alt="" />
                     </div>
                     {!userName?
                     <div className={`${styles["Signup-Login-container"]} d-flex align-items-center p-4`}>
