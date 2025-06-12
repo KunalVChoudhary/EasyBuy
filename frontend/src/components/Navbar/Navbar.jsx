@@ -1,11 +1,36 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {useSelector} from 'react-redux'
 import styles from './Navbar.module.scss'
+import Filter from '../Filter/Filter'
+import { useSearchParams } from 'react-router'
+import SearchBar from '../SearchBar/SearchBar'
 
 export default function Navbar(){
 
     const displayTheme=useSelector((state)=>state.displayTheme)
     const userName=useSelector(state=>state.userInfo)
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [searchBar, setSearchBar] = useState(false);
+    const [filterBox, setFilterBox] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+    useEffect(() => {
+        const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+        window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    useEffect(() => {
+        setSearchBar(false);
+        setFilterBox(false);
+    }, [searchParams]);
+
 
     return(
         <>
@@ -17,27 +42,27 @@ export default function Navbar(){
                     </div>                    
                 </div>
 
+                
+
                 <div className={`${styles["container-2"]} d-flex flex-grow-1 px-2`}>
-                    {/* Search for samll screen */}
-                    <label htmlFor={`${styles['searchbar-icon-toggle-input']}`} className={`${styles["search-bar-toggler"]} align-items-center`}>
-                        <img className={`p-2`} src="/images/search-icon.png" alt="search icon" />
-                    </label>
-                    <input id={`${styles['searchbar-icon-toggle-input']}`} type='checkbox' hidden />
-                    {/* ActualSearch Bar for samll screen */}
-                    <div className={`${styles["search-bar-container"]} align-items-center justify-content-center input-group px-2 py-2`}>
-                        <input className={`${styles["search-input-box"]} form-control px-2 py-1`} type="search" name="productSearch" id="prductSearch" placeholder='Search Product . . .' />
+
+                    <img className={` ${styles['hidingIcon']} p-2`} onClick={()=>{setSearchBar(true)}} src="/images/search-icon.png" alt="search icon" />
+
+                    <div className={`${styles["search-bar-container"]} ${(windowWidth<=750)?((searchBar)? styles['show-search-bar-container'] : styles['hide-search-bar-container']):''} align-items-center justify-content-center input-group px-2 py-2`}>
+                        <SearchBar/>
                     </div>
-                    {/* Filter-icon for samll screen */}
-                    <label htmlFor={`${styles['filter-icon-toggle-input']}`} className={`${styles["filter-item-toggler"]} align-items-center`}>
-                        <img className={`p-2`} src="/images/filter-icon.png" alt="filter icon" />
-                    </label>
-                    <input id={`${styles['filter-icon-toggle-input']}`} type='checkbox' hidden />
-                    {/* Actual Filter box for samll screen */}
-                    <div className={`${styles["filter-box-container"]} align-items-center justify-content-center px-2 py-2`}>
-                        <div className={`${styles["filter-box"]} px-2 py-1`}></div>
+
+                    <img className={` ${styles['hidingIcon']} p-2`} src="/images/filter-icon.png" onClick={()=>{setFilterBox(true)}} alt="filter icon" />
+
+                    <div className={` ${(windowWidth<=750 && filterBox)? styles['show-filter-box-container'] : styles['hide-filter-box-container']} align-items-center justify-content-center px-2 py-2`}>
+                        <Filter/>
                     </div>
-                    {/* dim body */}
-                    <div className={styles.overlay} ></div>
+
+                    <div className={`${((windowWidth<=750)&&(searchBar || filterBox)) ? styles["overlayBackground"]:''}`} onClick={()=>{
+                        setSearchBar(false);
+                        setFilterBox(false)
+                    }}></div>
+            
                 </div>
 
                 <div className={`${styles["container-3"]} justify-content-end ps-3`}>

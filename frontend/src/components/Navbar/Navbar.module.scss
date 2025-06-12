@@ -42,17 +42,13 @@
     width: 65px;
 }
 
-//for search bar
+//Container2 for search and filter
 
-.search-bar-toggler{
+.hidingIcon{
     display: none;
 }
 
-.overlay{
-    display: none;
-}
-
-#searchbar-icon-toggle-input:checked ~ div.overlay {
+.overlayBackground{
     display: block;
     position: fixed;
     inset: 0;
@@ -60,9 +56,9 @@
     z-index: 800;
 }
 
-#searchbar-icon-toggle-input:checked +div{
+.show-search-bar-container{
     display: flex !important;
-    position: fixed;
+    position: absolute !important;
     top: 100px;;
     z-index: 801;
     left: 50%;
@@ -70,37 +66,32 @@
     height: 70px;
 }
 
-#searchbar-icon-toggle-input:checked +div > input{
-    max-width: 600px;
-    min-width: 150px !important;
+.hide-search-bar-container{
+    display: none !important;
 }
 
 .search-bar-container{
     display: flex;
 }
 
-.search-input-box{
-    height: 100%;
-    min-width:175px !important;
-    max-width: 750px;
-}
-
-
-//for small screen filter
-.filter-item-toggler{
-    display: none;
-}
-
-#filter-icon-toggle-input:checked ~ div.overlay {
-    display: block;
+.show-filter-box-container{
+    display: flex !important;
     position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.5); // dim effect
-    z-index: 800;
+    z-index: 801;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    max-width: 500px;
+    min-width: 250px;
+    width: 100%;
 }
 
-.filter-box-container{
-    display: none;
+.show-filter-box-container>div{
+    transform: none;
+}
+
+.hide-filter-box-container{
+    display: none !important;
 }
 
 
@@ -195,24 +186,15 @@
         justify-content: end;
     }
 
-    .search-bar-toggler{
-        display: flex;
-    }
-
-    .search-bar-container{
-        display: none !important;
-    }
-
-    .filter-item-toggler{
-        display: flex;
-    }
-
     .container-3{
         display: none;
     }
 
     .container-4{
         display:flex;
+    }
+    .hidingIcon{
+        display: block;
     }
 
     #navbar-content-toggle-input2:checked + div{
