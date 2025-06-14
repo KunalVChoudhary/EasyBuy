@@ -35,7 +35,7 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         console.log("Success:", data);
-        dispatch(setUserInfo(data.user.name));
+        dispatch(setUserInfo(data.user));
       } 
       else {
         const errorData = await response.json();
