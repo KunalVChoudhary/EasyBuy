@@ -30,12 +30,12 @@ route.post('/auth/signin', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if (err) return next(err);
         if (!user) {
-            return res.redirect(`/failure?message=${encodeURIComponent(info.message)}`);
+            return res.status(400).json({message: 'Login failed'});
         }
 
         req.logIn(user, (err) => {
             if (err) return next(err);
-            return res.redirect('/');
+            return res.status(200).json({ message: 'Login Successfull', user:user.name });
         });
     })(req, res, next);
 });
@@ -81,13 +81,13 @@ route.get('/auth/google/pull',(req, res, next) => {
 
 route.get('/signout',(req,res)=>{
     req.logout((err) => {
-		if (err) return res.sendStatus(400);
+		if (err) return res.status(400).json({'attempt': false});
         req.session.destroy((err) => {
             if (err) {
-                return res.redirect('/'); 
+                return res.status(400).json({'attempt': false}); 
             }
             res.clearCookie('connect.sid'); 
-            res.redirect('/');})
+            res.status(200).json({'attempt': true});})
     });
 });
 
