@@ -1,18 +1,59 @@
-import React from 'react'
+import {useEffect} from 'react'
 import {useDispatch,useSelector} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
 import styles from './ProductCard.module.scss'
+import { usePostCartItemMutation } from '../../redux/apiSlice/apiCartSlice';
+import { toast } from 'react-toastify';
+import { usePostWishListItemMutation } from '../../redux/apiSlice/apiWishListSlice';
 
 export default function ProductCard({productDetail}) {
-    //onclick on productCard not added
-    // wishlist and cart onclick not added
-    console.log(productDetail);
 
+    const navigate = useNavigate()
+
+    //cart
+    const [postCartItem, { isLoading: isCartLoading, isSuccess: isCartSuccess, isError: isCartError, data: cartData, error: cartError }] = usePostCartItemMutation();
+
+    const handleAddToCart = () => {
+        postCartItem({
+        productId: productDetail._id,
+        quantity: 1,
+        });
+        
+    };
+
+    useEffect(() => {
+        if (isCartSuccess) {
+            toast.success(cartData.message);
+        } else if (isCartError) {
+            toast.error(cartError.data.message);
+        }
+    }, [isCartSuccess, isCartError]);
+
+    //wishlist
+    const [postWishListItem, { isLoading: isWishLoading, isSuccess: isWishSuccess, isError: isWishError, data: wishData, error: wishError }] = usePostWishListItemMutation();
+
+    const handleAddToWishList = () => {
+        postWishListItem({
+        productId: productDetail._id
+        });
+        
+    };
+
+    useEffect(() => {
+        if (isWishSuccess) {
+            toast.success(wishData.message);
+        } else if (isWishError) {
+            toast.error(wishError.data.message);
+        }
+    }, [isWishSuccess, isWishError]);
+
+    //store
     const displayTheme=useSelector(state=>state.displayTheme)
     
     return (
         
-        <>           
-            <div className={`${styles.productCard} card p-2 ${styles[displayTheme]}`} >
+        <>
+            <div className={`${styles.productCard} card p-2 ${styles[displayTheme]}`}>
                 <div id="carouselExample" className={`card-img-top carousel ${(displayTheme === 'dark')? `${styles[displayTheme]}` : `carousel-dark ${styles[displayTheme]}`} slide`}>
                     <div className={`carousel-inner`}>
                         {productDetail.images.map((element, index) => (
@@ -31,10 +72,10 @@ export default function ProductCard({productDetail}) {
                     </button>
                 </div>
                 <div className={`card-body px-0 py-1`}>
-                    <h5 className={`card-title m-0 fs-5 text-truncate`}> {productDetail.title}</h5>
-                    <p className={`card-text fw-lighter m-0 mb-2`}>{productDetail.brand}</p>
-                    <p className={`card-text lh-sm mb-1 ${styles.truncate2}`}>{productDetail.description}</p>
-                    <div className='d-flex align-items-center mb-2'>
+                    <h5 className={`card-title m-0 fs-5 text-truncate`} onClick={()=>{navigate(`/productpage?id=${productDetail._id}`)}}> {productDetail.title}</h5>
+                    <p className={`card-text fw-lighter m-0 mb-2`} onClick={()=>{navigate(`/productpage?id=${productDetail._id}`)}}>{productDetail.brand}</p>
+                    <p className={`card-text lh-sm mb-1 ${styles.truncate2}`} onClick={()=>{navigate(`/productpage?id=${productDetail._id}`)}}>{productDetail.description}</p>
+                    <div className='d-flex align-items-center mb-2' onClick={()=>{navigate(`/productpage?id=${productDetail._id}`)}}>
                         {
                             [...Array(5)].map((_, i) => {
                                 const starValue = i + 1;
@@ -55,10 +96,10 @@ export default function ProductCard({productDetail}) {
                     <div className={`${styles.productPriceContainer}card-text d-flex justify-content-between align-items-center`}>
                         <div className=''>
                             
-                            <img className={`${styles.starimg} mx-1`} src={'images/wishlist-icon.png'} alt="wishlist" />
-                            <img className={`${styles.starimg} mx-2`} src={`images/cart-${(displayTheme=='dark')?'light':'dark'}-icon.png`} alt="cart" />
+                            <img className={`${styles.starimg} mx-1`} src={'images/wishlist-icon.png'} alt="wishlist" onClick={handleAddToWishList} />
+                            <img className={`${styles.starimg} mx-2`} src={`images/cart-${(displayTheme=='dark')?'light':'dark'}-icon.png`} alt="cart" onClick={handleAddToCart} />
                         </div>
-                        <div className='d-flex align-items-end'>
+                        <div className='d-flex align-items-end' onClick={()=>{navigate(`/productpage?id=${productDetail._id}`)}}>
                             <p className={`m-0 fs-5 fw-medium`}>${productDetail.price}</p>
                             <p className={`text-decoration-line-through fw-lighter m-0`}>
                                 {((productDetail.price*100)/(100-(productDetail.discountPercentage))).toFixed(2)}
