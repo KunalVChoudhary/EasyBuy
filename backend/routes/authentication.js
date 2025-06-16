@@ -91,12 +91,6 @@ route.get('/signout',(req,res)=>{
     });
 });
 
-route.get('/auth/failure',(req,res)=>{
-    let message;
-    {req.query.message? message=req.query.message:message="server error"}
-    res.json({message})
-})
-
 
 
 

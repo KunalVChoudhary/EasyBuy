@@ -5,25 +5,31 @@ const { Product } = require('../models/product');
 const route=Router();
 
 route.get('/cart',async(req,res)=>{
-    const user=await User.findOne({email:req.user.email})
+    try{const user=await User.findOne({email:req.user.email})
     const userCart=await Cart.findOne({userId:user.id})
-    return res.json(userCart.items)
+    return res.status(200).json(userCart.items)}
+    catch{
+        return res.status(401).json({message:'Please Login before accessing cart'})
+    }
 })
 
 route.post('/cart',async (req,res)=>{
-    let {productId,quantity}=req.body;
+    try{let {productId,quantity}=req.body;
     const user=await User.findOne({email:req.user.email})
     const userCart= await Cart.findOne({userId:user.id})
     const checkItemInCart= userCart.items.find(item=>item.productId==productId)
     if(!checkItemInCart){
         userCart.items=[...userCart.items,{productId,quantity}]
         await userCart.save()
-        return res.status(200).json({message:'cart updated successfully'})}
-    return res.status(400).json({message:'item already in cart'})
+        return res.status(200).json({message:'Cart updated successfully'})}
+    return res.status(400).json({message:'Item already in cart'})}
+    catch(err){
+        return res.status(401).json({message:'Please Login before accessing cart'})
+    }
 })
 
 route.patch('/cart',async(req,res)=>{
-    let {productId,quantity}=req.body;
+    try{let {productId,quantity}=req.body;
     const user=await User.findOne({email:req.user.email});
     const userCart= await Cart.findOne({userId:user.id})
     for (let index = 0; index < userCart.items.length; index++) {
@@ -34,11 +40,14 @@ route.patch('/cart',async(req,res)=>{
             return res.status(200).json({message:'cart updated successfully'})
         }
     }
-    return res.status(400).json({message:'item not in cart'})
+    return res.status(400).json({message:'item not in cart'})}
+    catch{
+        return res.status(401).json({message:'Please Login before accessing cart'})
+    }
 })
 
 route.delete('/cart',async(req,res)=>{
-    let {productId}=req.body
+    try{let {productId}=req.body
     const user=await User.findOne({email:req.user.email});
     const userCart= await Cart.findOne({userId:user.id})
     const checkItemInCart= userCart.items.find(item=>item.productId==productId)
@@ -47,7 +56,10 @@ route.delete('/cart',async(req,res)=>{
         userCart.items=[...updatedItemsList]
         await userCart.save()
         return res.status(200).json({message:'item delete successfully'})}
-    return res.status(400).json({message:'item not in cart'})  
+    return res.status(400).json({message:'item not in cart'})}
+    catch{
+        return res.status(401).json({message:'Please Login before accessing cart'})
+    }  
 })
 
 module.exports=route;

@@ -10,7 +10,7 @@ route.get('/wishlist',async(req,res)=>{
         return wishList? res.status(200).json(wishList.items) : res.status(200).json([])
     }
     catch(err){
-        return res.status(400).json({message:"cannot find the wishList"})
+        return res.status(401).json({message:"Please Login before accessing wishList"})
     }
 })
 
@@ -22,10 +22,10 @@ route.post('/wishlist',async(req,res)=>{
             {userId:req.user.id},
             {$addToSet:{items:productId}
         },{new:true,upsert:true})
-        return res.status(200).json(wishList)
+        return res.status(200).json({message:"Item added to wishList"})
     }
     catch(err){
-        return res.status(400).json({message:"couldnt add to wishList",error:err.message})
+        return res.status(401).json({message:"Please Login before accessing wishList",error:err.message})
     }
 })
 
@@ -39,7 +39,7 @@ route.delete('/wishlist',async(req,res)=>{
         return res.status(200).json(wishList);
     }
     catch(err){
-       return  res.status(400).json({message:"cannot find the wishList",error:err.message})
+       return  res.status(401).json({message:"Please Login before accessing wishList",error:err.message})
     }
 })
 
