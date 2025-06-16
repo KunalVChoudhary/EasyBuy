@@ -1,7 +1,10 @@
 import React from 'react'
 import styles from './LogOut.module.scss'
+import { useNavigate } from 'react-router-dom';
 
 function LogOut({ setLogOutState, setLogOutResult }) {
+
+    const navigate = useNavigate()
 
     const logOutUser = async () => {
         try {
@@ -13,6 +16,8 @@ function LogOut({ setLogOutState, setLogOutResult }) {
             if (data.attempt) {
                 localStorage.removeItem('AppDetail');
                 setLogOutResult([true, 'Logged Out Successfully']);
+                navigate('/')
+                window.location.reload()
             } else {
                 setLogOutResult([true, 'Log Out Failed']);
             }
