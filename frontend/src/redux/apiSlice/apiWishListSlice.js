@@ -1,7 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
+import  {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 
 export const wishListApi=createApi({
-    baseQuery:fetchBaseQuery({baseUrl:"http://localhost:8000"}),
+    baseQuery:fetchBaseQuery({baseUrl:"http://localhost:8000", credentials: "include"}),
     tagTypes:['getWishList'],
     endpoints:(builder)=>({
         getWishListItems:builder.query({
@@ -53,4 +53,4 @@ export const wishListApi=createApi({
     })
 })
 
-export const {getWishListItems,postWishListItem,deleteWishListItem} = wishListApi
+export const {useGetWishListItemsQuery,usePostWishListItemMutation,useDeleteWishListItemMutation} = wishListApi;
