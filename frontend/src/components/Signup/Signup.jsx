@@ -25,7 +25,7 @@ function Signup() {
   const handleSubmission=async (e)=>{
     e.preventDefault()
     try{
-      const response = await fetch('http://localhost:8000/auth/signup', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -49,10 +49,10 @@ function Signup() {
   }
 
   const handleGoogleSubmission = async (e)=>{
-    try {const popup = window.open('http://localhost:8000/auth/google',"_blank","width=500,height=600");
+    try {const popup = window.open(`${import.meta.env.VITE_API_URL}/auth/google`,"_blank","width=500,height=600");
 
     const handleMessageEvent = async (e)=>{
-      if (e.origin !== 'http://localhost:8000') return;
+      if (e.origin !== `${import.meta.env.VITE_API_URL}`) return;
       const response=e.data;
       if (response.success){
         console.log("Success:", response);

@@ -1,13 +1,14 @@
 import  {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 export const cartApi= createApi({
-    baseQuery:fetchBaseQuery({baseUrl:"http://localhost:8000",credentials: "include"}),
+    baseQuery:fetchBaseQuery({baseUrl:`${import.meta.env.VITE_API_URL}`,credentials: "include"}),
     tagTypes:['getCart'],
     endpoints:(builder)=>({
-        getCartItems:builder.query({
+        getCartItems:builder.query(
+            {
             query:()=> '/cart',
             transformResponse: (items)=> items.reverse(),
-            providesTags:['getCart']
-        }),
+            providesTags:['getCart']}
+        ),
         postCartItem:builder.mutation({
             query:(item)=>({
                 url:'/cart',

@@ -14,7 +14,7 @@ function ProductPage() {
 
   useEffect(() => {
     const query = searchParams.toString();
-    fetch(`http://localhost:8000/products?${query}`,{
+    fetch(`${import.meta.env.VITE_API_URL}/products?${query}`,{
       method:'GET',credentials:'include'
     })
       .then(res => res.json())
