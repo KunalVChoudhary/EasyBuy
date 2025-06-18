@@ -2,13 +2,17 @@ import { useEffect, useState } from 'react'
 import {useSelector} from 'react-redux'
 import styles from './Navbar.module.scss'
 import Filter from '../Filter/Filter'
-import { useSearchParams } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import SearchBar from '../SearchBar/SearchBar'
+import LogOut from '../LogOutGroup/LogOut'
 
 export default function Navbar(){
 
     const displayTheme=useSelector((state)=>state.displayTheme)
     const userName=useSelector(state=>state.userInfo)
+    const navigate=useNavigate()
+
+    const [logOutState, setLogOutState] = useState(false)
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [searchBar, setSearchBar] = useState(false);
@@ -36,9 +40,9 @@ export default function Navbar(){
         <>
             <div className={`${styles["common-navbar"]} ${styles[displayTheme]} d-flex justify-content-between`}>
                 <div className={`${styles["container-1"]} d-flex px-3`}>
-                    <div className={`${styles["app-logo-container"]} d-flex align-items-center`}>
+                    <div className={`${styles["app-logo-container"]} d-flex align-items-center`} onClick={()=>{navigate('/')}}>
                         <img className={`${styles["app-icon"]} d-block`} src="/images/App-icon.png" alt="Logo"/>
-                        <p className={`${styles["app-name"]} px-1 h2 m-0`}>EasyBuy</p>
+                        <p className={`${styles["app-name"]} px-1 h2 m-0`} >EasyBuy</p>
                     </div>                    
                 </div>
 
@@ -58,24 +62,25 @@ export default function Navbar(){
                         <Filter/>
                     </div>
 
-                    <div className={`${((windowWidth<=750)&&(searchBar || filterBox)) ? styles["overlayBackground"]:''}`} onClick={()=>{
+                    <div className={`${( ((windowWidth<=750)&&(searchBar || filterBox)) || logOutState )? styles["overlayBackground"]:''}`} onClick={()=>{
                         setSearchBar(false);
-                        setFilterBox(false)
+                        setFilterBox(false);
                     }}></div>
             
                 </div>
 
                 <div className={`${styles["container-3"]} justify-content-end ps-3`}>
-                    <div className={`${styles["wishlist-container"]} d-flex align-items-center p-2`}>
+                    <div className={`${styles["wishlist-container"]} d-flex align-items-center p-2`} onClick={()=>{navigate('/wishlist')}}>
                         <img className={`d-inline px-2`} src="/images/wishlist-icon.png" alt="" />
                     </div>
-                    <div className={`${styles["cart-container"]} d-flex justify-content-center flex-column px-2 pb-2`}>
+                    <div className={`${styles["cart-container"]} d-flex justify-content-center flex-column px-2 pb-2`} onClick={()=>{navigate('/cart')}}>
                         <p className={`d-inline px-2 m-0 text-center`}>589</p>
                         <img className={`d-inline px-2`} src={`images/cart-dark-icon.png`} alt="" />
                     </div>
                     {!userName?
-                        <div className={`${styles["Signup-Login-container"]} d-flex align-items-center px-3 py-2`}>
-                        <div className={`h5 m-0`}>Signup/Login</div>
+                    <div className={`${styles["Signup-Login-container"]} d-flex `}>
+                        <div className='d-flex align-items-center'><p className={`h5 m-0 px-2`}>Signup</p></div>
+                        <div className='d-flex align-items-center'><p className={`h5 m-0 ps-2 pe-1`}>Login</p></div>
                     </div>:
                     <div className={`${styles["user-info-container"]} d-flex align-items-center p-2`}>
                         <div className={`d-flex`}>
@@ -88,9 +93,9 @@ export default function Navbar(){
                                 <ul className={`${styles['navbar-ul']} m-0 p-0 ${styles[displayTheme]}`}>
                                     <li>Account</li>
                                     <li>Home</li>
-                                    <li>{(displayTheme=='dark')? 'Switch Light Mode':'Switch Dark Mode'}</li>
+                                    <li>{(displayTheme=='dark')? 'Light Mode':'Dark Mode'}</li>
                                     <li>Settings</li>
-                                    <li>Log Out</li>
+                                    <li onClick={()=>{setLogOutState(true)}}>Log Out</li>
                                 </ul>
                             </div>
                         </div>
@@ -121,14 +126,21 @@ export default function Navbar(){
                                 <ul className={`${styles['navbar-ul']} p-0 m-0 ${styles[displayTheme]}`}>
                                     <li>Account</li>
                                     <li>Home</li>
-                                    <li>{(displayTheme=='dark')? 'Switch Light Mode':'Switch Dark Mode'}</li>
+                                    <li>{(displayTheme=='dark')? 'Light Mode':'Dark Mode'}</li>
                                     <li>Settings</li>
-                                    <li>Log Out</li>
+                                    <li onClick={()=>{setLogOutState(true)}}>Log Out</li>
                                 </ul>
                             </div>
                         </div>
                     </div>}
             </div>
+
+            {logOutState? 
+            <div className={`${styles['logOutContainer']}`}>
+                <LogOut setLogOutState={setLogOutState}/>
+            </div>
+            :
+            ''}
         </>
     )
 }

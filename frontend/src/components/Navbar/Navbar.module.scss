@@ -42,6 +42,41 @@
     width: 65px;
 }
 
+//border
+
+.wishlist-container{
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.wishlist-container:hover{
+    border: 2px solid white;
+}
+
+.cart-container{
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.cart-container:hover{
+    border: 2px solid white;
+}
+
+.cart-container>img{
+    height: 20px;
+    width: 36px;
+    object-fit: fill;
+}
+
+.Signup-Login-container>div{
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.Signup-Login-container>div:hover{
+    border: 2px solid white;
+}
+
 //Container2 for search and filter
 
 .hidingIcon{
@@ -177,6 +212,16 @@
 .navbar-content-toogle-list2>ul>li:hover{
     font-size: 1.2rem;
     font-weight: 600;
+}
+
+//logout
+
+.logOutContainer{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 801;
 }
 
 @media (max-width:750px){
