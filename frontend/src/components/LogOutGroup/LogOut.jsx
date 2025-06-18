@@ -1,8 +1,9 @@
 import React from 'react'
 import styles from './LogOut.module.scss'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-function LogOut({ setLogOutState, setLogOutResult }) {
+function LogOut({ setLogOutState}) {
 
     const navigate = useNavigate()
 
@@ -15,15 +16,15 @@ function LogOut({ setLogOutState, setLogOutResult }) {
             const data = await response.json();
             if (data.attempt) {
                 localStorage.removeItem('AppDetail');
-                setLogOutResult([true, 'Logged Out Successfully']);
+                toast.success('Logged Out Successfully')
                 navigate('/')
                 window.location.reload()
             } else {
-                setLogOutResult([true, 'Log Out Failed']);
+                toast.error('Log Out Failed')
             }
         } catch (err) {
             console.error(err);
-            setLogOutResult([true, 'Log Out Failed']);
+            toast.error('Log Out Failed')
         } finally {
             setLogOutState(false);
         }
@@ -33,7 +34,7 @@ function LogOut({ setLogOutState, setLogOutResult }) {
         if (shouldLogOut) {
             logOutUser();
         } else {
-            setLogOutResult([true, 'Log Out Cancelled']);
+            toast.error('Log Out Failed')
             setLogOutState(false);
         }
     };
