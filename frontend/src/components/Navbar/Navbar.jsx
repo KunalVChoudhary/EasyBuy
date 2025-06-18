@@ -5,6 +5,7 @@ import Filter from '../Filter/Filter'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import SearchBar from '../SearchBar/SearchBar'
 import LogOut from '../LogOutGroup/LogOut'
+import { useGetCartItemsQuery } from '../../redux/apiSlice/apiCartSlice'
 
 export default function Navbar(){
 
@@ -12,11 +13,14 @@ export default function Navbar(){
     const userName=useSelector(state=>state.userInfo)
     const navigate=useNavigate()
 
-    const [logOutState, setLogOutState] = useState(false)
 
+    // for display of components
+    const [logOutState, setLogOutState] = useState(false)
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [searchBar, setSearchBar] = useState(false);
     const [filterBox, setFilterBox] = useState(false);
+
+    //for search
     const [searchParams, setSearchParams] = useSearchParams();
     useEffect(() => {
         const handleResize = () => {
@@ -34,6 +38,10 @@ export default function Navbar(){
         setSearchBar(false);
         setFilterBox(false);
     }, [searchParams]);
+
+    //for cart no.
+    const { data, isLoading , isError }= useGetCartItemsQuery()
+    useEffect(()=>{console.log(data);},[data])
 
 
     return(
@@ -74,7 +82,7 @@ export default function Navbar(){
                         <img className={`d-inline px-2`} src="/images/wishlist-icon.png" alt="" />
                     </div>
                     <div className={`${styles["cart-container"]} d-flex justify-content-center flex-column px-2 pb-2`} onClick={()=>{navigate('/cart')}}>
-                        <p className={`d-inline px-2 m-0 text-center`}>589</p>
+                        <p className={`d-inline px-2 m-0 text-center`} style={{position: 'relative',top: '2px'}}>{data?.length}</p>
                         <img className={`d-inline px-2`} src={`images/cart-dark-icon.png`} alt="" />
                     </div>
                     {!userName?
