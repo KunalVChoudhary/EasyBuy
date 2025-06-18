@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify';
 
 import styles from './Signup.module.scss'
 import { setUserInfo } from '../../redux/createSlice/userInfoSlice'
@@ -7,6 +9,7 @@ import { setUserInfo } from '../../redux/createSlice/userInfoSlice'
 function Login() {
 
   const dispatch=useDispatch()
+  const navigate = useNavigate()
 
   const displayTheme=useSelector((state)=>state.displayTheme)
 
@@ -34,16 +37,19 @@ function Login() {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log("Success:", data);
         dispatch(setUserInfo(data.user));
+        navigate('/')
+        toast.success('Logged in Successfully')
       } 
       else {
         const errorData = await response.json();
-        console.error('Signup failed:', errorData);
+        console.error('Login failed:', errorData);
+        toast.error('Login failed. Try again')
       }
     }
     catch (err){
       console.error("Error submitting form:", err);
+      toast.error('Login failed. Try again')
     }
   }
 
@@ -54,11 +60,12 @@ function Login() {
       if (e.origin !== `${import.meta.env.VITE_API_URL}`) return;
       const response=e.data;
       if (response.success){
-        console.log("Success:", response);
-        dispatch(setUserInfo(response.user))
+        dispatch(setUserInfo(response.user));
+        toast.success('Logged in Successfully')
       }
       else{
-        console.error('Signup failed:', response);
+        console.error('Login failed:', response);
+        toast.error('Login failed. Try again')
       }
       window.removeEventListener('message',handleMessageEvent)
     }
@@ -66,6 +73,7 @@ function Login() {
     window.addEventListener('message',handleMessageEvent)}
     catch(err){
       console.error("Error Connecting to Google:", err);
+      toast.error('Login failed. Try again')
     }
 
   }

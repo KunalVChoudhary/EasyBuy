@@ -35,16 +35,18 @@ function Signup() {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log("Success:", data);
         dispatch(setUserInfo(data.user));
+        toast.success('Logged in Successfully')
       } 
       else {
         const errorData = await response.json();
         console.error('Signup failed:', errorData);
+        toast.error('Signup failed. Try again')
       }
     }
     catch (err){
       console.error("Error submitting form:", err);
+      toast.error('Signup failed. Try again')
     }
   }
 
@@ -55,11 +57,12 @@ function Signup() {
       if (e.origin !== `${import.meta.env.VITE_API_URL}`) return;
       const response=e.data;
       if (response.success){
-        console.log("Success:", response);
         dispatch(setUserInfo(response.user))
+        toast.success('Logged in Successfully')
       }
       else{
         console.error('Signup failed:', response);
+        toast.error('Signup failed. Try again')
       }
       window.removeEventListener('message',handleMessageEvent)
     }
@@ -67,6 +70,7 @@ function Signup() {
     window.addEventListener('message',handleMessageEvent)}
     catch(err){
       console.error("Error Connecting to Google:", err);
+      toast.error('Signup failed. Try again')
     }
 
   }

@@ -3,26 +3,38 @@ import './App.css'
 import Signup from './components/Signup/Signup'
 import Login from './components/Signup/Login'
 import Navbar from './components/Navbar/Navbar'
-import ProductPage from './components/ProductPage/ProductPage'
 import Footer from './components/Footer/Footer'
-import Try1 from './components/try/try1'
-import Filter from './components/Filter/Filter'
 import HomePage from './components/HomePage/HomePage'
 import { ToastContainer } from 'react-toastify'
 
 function App() {
   return (
     <Routes>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/signup' element={<Signup/>}/>
+      <Route path='/login' element={
+        <div>
+          < ToastContainer position="top-right"/>
+          <Login/>
+        </div>
+      }/>
+      <Route path='/signup' element={
+        <div>
+          <ToastContainer position="top-right"/>
+          <Signup/>
+        </div>
+      }/>
       <Route path='/' element={
         <div>
-          <ToastContainer/>
+          <ToastContainer position="top-right"r/>
           <Navbar/>
           <HomePage/>
           <Footer/>
         </div>} />
-      <Route path='/productpage' element={<Try1/>}/>
+      <Route path='/productpage' element={
+        <div>
+          <ToastContainer position="top-right"/>
+          lol
+        </div>
+      }/>
     </Routes>
   )
 }
