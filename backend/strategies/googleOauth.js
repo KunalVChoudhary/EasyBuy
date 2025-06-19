@@ -7,7 +7,7 @@ const { Cart } = require('../models/cart.js');
 passport.use(new Strategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `http://localhost:${process.env.PORT}/auth/google/pull`
+    callbackURL: process.env.GOOGLE_CALLBACK_URL
   },
   async function(accessToken, refreshToken, profile, cb) {
     try {
