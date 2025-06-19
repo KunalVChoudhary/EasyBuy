@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { useNavigate } from 'react-router-dom'
 import styles from './Signup.module.scss'
 import { setUserInfo } from '../../redux/createSlice/userInfoSlice'
 
 function Signup() {
+
+  const navigate = useNavigate()
 
   const dispatch=useDispatch()
 
@@ -36,6 +38,7 @@ function Signup() {
       if (response.ok) {
         const data = await response.json();
         dispatch(setUserInfo(data.user));
+        navigate('/')
         toast.success('Logged in Successfully')
       } 
       else {
@@ -58,6 +61,7 @@ function Signup() {
       const response=e.data;
       if (response.success){
         dispatch(setUserInfo(response.user))
+        navigate('/')
         toast.success('Logged in Successfully')
       }
       else{

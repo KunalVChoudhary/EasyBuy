@@ -61,6 +61,7 @@ function Login() {
       const response=e.data;
       if (response.success){
         dispatch(setUserInfo(response.user));
+        navigate('/')
         toast.success('Logged in Successfully')
       }
       else{
