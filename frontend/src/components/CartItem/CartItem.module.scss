@@ -1,0 +1,24 @@
+.CartItem{
+    border: 2px solid black;
+    border-radius: 1.5rem;
+    transition: 0.3s ease-in-out;
+}
+
+.CartItem:hover{
+    transform: scale(1.05);
+}
+
+.CartItemImg{
+    background-color: rgb(254, 232, 236);
+    width: 100%;
+    height: auto;
+    //min-height: 150px;
+    //min-width: 150px;
+    object-fit: fill;
+}
+
+.starimg{
+  height: 20px;
+  width: 20px;
+}
+
