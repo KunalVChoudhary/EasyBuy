@@ -5,7 +5,7 @@ import Filter from '../Filter/Filter'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import SearchBar from '../SearchBar/SearchBar'
 import LogOut from '../LogOutGroup/LogOut'
-import { useGetCartItemsQuery } from '../../redux/apiSlice/apiCartSlice'
+import { useGetCartLengthQuery } from '../../redux/apiSlice/apiCartSlice'
 
 export default function Navbar(){
 
@@ -40,9 +40,7 @@ export default function Navbar(){
     }, [searchParams]);
 
     //for cart no.
-    const { data, isLoading , isError }= useGetCartItemsQuery()
-    useEffect(()=>{console.log(data);},[data])
-
+    const { data, isLoading , isError }= useGetCartLengthQuery()
 
     return(
         <>
@@ -82,7 +80,7 @@ export default function Navbar(){
                         <img className={`d-inline px-2`} src="/images/wishlist-icon.png" alt="" />
                     </div>
                     <div className={`${styles["cart-container"]} d-flex justify-content-center flex-column px-2 pb-2`} onClick={()=>{navigate('/cart')}}>
-                        <p className={`d-inline px-2 m-0 text-center`} style={{position: 'relative',top: '2px'}}>{data?.length}</p>
+                        <p className={`d-inline px-2 m-0 text-center`} style={{position: 'relative',top: '2px'}}>{data}</p>
                         <img className={`d-inline px-2`} src={`images/cart-dark-icon.png`} alt="" />
                     </div>
                     {!userName?
@@ -115,7 +113,7 @@ export default function Navbar(){
                         <img className={`d-inline px-2`} src="/images/wishlist-icon.png" alt="" />
                     </div>
                     <div className={`${styles["cart-container"]} d-flex justify-content-center flex-column p-4`}>
-                        <p className={`d-inline px-2 m-0 text-center`}>589</p>
+                        <p className={`d-inline px-2 m-0 text-center`} style={{position: 'relative',top: '2px'}}>{data}</p>
                         <img className={`d-inline px-2`} src={`images/cart-dark-icon.png`} alt="" />
                     </div>
                     {!userName?
