@@ -44,7 +44,7 @@ function Filter(){
 
   
   return (
-    <div className={`${styles['filterSection']} ${styles[displayTheme]} d-flex flex-column p-3 row-gap-3`}>
+    <div className={`${styles['filterSection']} ${styles[displayTheme]} d-flex flex-column p-3 row-gap-4`}>
       <div className={`${styles['filterHeading']} fs-4 fw-bolder text-center m-2 pb-2`}>Filter</div>
 
       <details className={`${styles['filterDropDown']} p-2 fs-6`}>
@@ -94,7 +94,7 @@ function Filter(){
         <label><input type="radio" name='order' onClick={handleInputClick} value={-1} /> Descending</label>
       </details>
 
-      <button className={`${styles["applyFilterBtn"]} p-2 fw-bolder`} onClick={handleSubmission}>Apply Filter</button>
+      <button className={`${styles["applyFilterBtn"]} p-2 fw-bolder mb-2`} onClick={handleSubmission}>Apply Filter</button>
 
     </div>
   )
