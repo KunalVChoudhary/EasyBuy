@@ -6,6 +6,8 @@ import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import HomePage from './components/HomePage/HomePage'
 import { ToastContainer } from 'react-toastify'
+import CartPage from './components/CartPage/CartPage'
+import CartRoute from './components/CartRoute/CartRoute'
 
 function App() {
   return (
@@ -22,19 +24,15 @@ function App() {
           <Signup/>
         </div>
       }/>
-      <Route path='/' element={
-        <div>
-          <ToastContainer position="top-right"r/>
-          <Navbar/>
-          <HomePage/>
-          <Footer/>
-        </div>} />
-      <Route path='/productpage' element={
+      <Route path='/' element={<HomePage />} />
+      <Route path='/productpage:productId' element={
         <div>
           <ToastContainer position="top-right"/>
           lol
         </div>
       }/>
+
+      <Route path='/cart' element={<CartRoute />}/>
     </Routes>
   )
 }
