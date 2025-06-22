@@ -1,0 +1,18 @@
+.CartBill{
+    display: inline-flex;
+    width: 80%;
+    border:3px solid black;
+    border-radius: 15px;
+    position: sticky;
+    margin-bottom: 2rem;
+    //transform: translateY(-50%);
+}
+
+.filterSection{
+  width: 100%;
+  border:2px solid black;
+  border-radius: 15px;
+  position: sticky;
+  top: 150px;
+  margin-bottom: 2rem;
+}
