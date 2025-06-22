@@ -2,7 +2,7 @@ import  {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 export const cartApi= createApi({
     reducerPath: 'cartApi',
     baseQuery:fetchBaseQuery({baseUrl:`${import.meta.env.VITE_API_URL}`,credentials: "include"}),
-    tagTypes:['getCart'],
+    tagTypes:['getCart','getCartLength'],
     endpoints:(builder)=>({
         getCartItems:builder.query(
             {
@@ -10,24 +10,37 @@ export const cartApi= createApi({
             transformResponse: (items)=> items.reverse(),
             providesTags:['getCart']}
         ),
+        getCartLength:builder.query(
+            {
+            query:()=> '/cart/len',
+            providesTags:['getCartLength']}
+        ),
         postCartItem:builder.mutation({
             query:(item)=>({
                 url:'/cart',
                 method:'POST',
                 body:item              
             }),
-            invalidatesTags:['getCart'],
+            invalidatesTags:['getCart', 'getCartLength'],
             async onQueryStarted(item, { dispatch, queryFulfilled }) {
                 const postResult = dispatch(
                   cartApi.util.updateQueryData("getCartItems", undefined, (draft) => {
                     draft.unshift({...item });
                   }),
-            )
-            try {
-                await queryFulfilled;
-            } catch {
-                postResult.undo();
-            }
+                )
+
+                const addToCartLengthPatch = dispatch(
+                    cartApi.util.updateQueryData("getCartLength", undefined, (len) => {
+                        return len + 1;
+                    })
+                )
+
+                try {
+                    await queryFulfilled;
+                } catch {
+                    postResult.undo();
+                    addToCartLengthPatch.undo()
+                }
             },            
         }),
         updateCartItem:builder.mutation({
@@ -36,11 +49,11 @@ export const cartApi= createApi({
                 method:'PATCH',
                 body:item
             }),
-            invalidatesTags:['getCart'],
+            invalidatesTags:['getCart', 'getCartLength'],
             async onQueryStarted(item, { dispatch, queryFulfilled }) {
                 const patchResult = dispatch(
                   cartApi.util.updateQueryData("getCartItems", undefined, (items) => {
-                  const itemIndex=items.findIndex((element)=>element.productId===item.productId)
+                  const itemIndex=items.findIndex((element)=>element.productId._id===item.productId)
                   if (itemIndex !== -1) {
                     items[itemIndex] = { ...items[itemIndex], ...item };
                    }
@@ -59,16 +72,23 @@ export const cartApi= createApi({
                 method:'DELETE',
                 body:{productId}
             }),
-            invalidatesTags:['getCart'],
+            invalidatesTags:['getCart', 'getCartLength'],
             async onQueryStarted({productId},{dispatch,queryFulfilled}){
                 const deleteResult=dispatch(
                     cartApi.util.updateQueryData('getCartItems',undefined,(items)=>{
-                        const itemIndex=items.findIndex((element)=>element.productId===productId)
+                        const itemIndex=items.findIndex((element)=>element.productId._id===productId)
                         if (itemIndex !== -1) {
                             items.splice(itemIndex, 1);
                           }
                     }),
                 )
+
+                const addToCartLengthPatch = dispatch(
+                    cartApi.util.updateQueryData("getCartLength", undefined, (len) =>{
+                        return Math.max(len - 1, 0)
+                    })
+                )
+
                 try {
                     await queryFulfilled
                 } catch (error) {
@@ -79,4 +99,4 @@ export const cartApi= createApi({
     })
 });
 
-export const {useGetCartItemsQuery,usePostCartItemMutation,useUpdateCartItemMutation,useDeleteCartItemMutation} = cartApi
+export const {useGetCartItemsQuery,useGetCartLengthQuery,usePostCartItemMutation,useUpdateCartItemMutation,useDeleteCartItemMutation} = cartApi
