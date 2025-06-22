@@ -1,0 +1,13 @@
+.wish-card{
+    cursor: pointer;
+    background-color: rgb(237, 229, 229) !important;
+}
+
+.wish-card:hover{
+    transform: scale(1.01);
+    border: 3px solid rgb(63, 59, 59);
+}
+
+.wish-card-title:hover{
+    text-decoration: underline;
+}
