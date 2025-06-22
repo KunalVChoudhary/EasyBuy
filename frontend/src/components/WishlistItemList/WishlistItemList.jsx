@@ -1,6 +1,6 @@
 import React from 'react'
 import { useGetWishListItemsQuery } from '../../redux/apiSlice/apiWishListSlice';
-import WishlistItem from '../WishListItem/WishlistItem';
+import WishlistItem from '../WishlistItem/WishlistItem';
 import styles from './WishlistItemList.module.scss'
 
 function WishlistItemList() {
