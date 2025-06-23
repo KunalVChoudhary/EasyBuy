@@ -80,7 +80,7 @@ export default function Navbar(){
                         <img className={`d-inline px-2`} src="/images/wishlist-icon.png" alt="" />
                     </div>
                     <div className={`${styles["cart-container"]} d-flex justify-content-center flex-column px-2 pb-2`} onClick={()=>{navigate('/cart')}}>
-                        <p className={`d-inline px-2 m-0 text-center`} style={{position: 'relative',top: '2px'}}>{data}</p>
+                        <p className={`d-inline px-2 m-0 text-center`} style={{position: 'relative',top: '2px'}}>{data || 0}</p>
                         <img className={`d-inline px-2`} src={`images/cart-dark-icon.png`} alt="" />
                     </div>
                     {!userName?
@@ -113,7 +113,7 @@ export default function Navbar(){
                         <img className={`d-inline px-2`} src="/images/wishlist-icon.png" alt="" />
                     </div>
                     <div className={`${styles["cart-container"]} d-flex justify-content-center flex-column p-4`}>
-                        <p className={`d-inline px-2 m-0 text-center`} style={{position: 'relative',top: '2px'}}>{data}</p>
+                        <p className={`d-inline px-2 m-0 text-center`} style={{position: 'relative',top: '2px'}}>{data || 0}</p>
                         <img className={`d-inline px-2`} src={`images/cart-dark-icon.png`} alt="" />
                     </div>
                     {!userName?
