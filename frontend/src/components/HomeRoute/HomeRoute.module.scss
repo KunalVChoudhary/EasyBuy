@@ -1,0 +1,17 @@
+.homePageContainer{
+    background-color: black;
+    flex: 1;
+    //position:relative;
+    //top: 70px;
+    
+}
+
+@media (max-width:750px){
+    .filterContainer{
+        display: none;
+    }
+    
+    .productPageContainer{
+        width: 100% !important;
+    }
+}

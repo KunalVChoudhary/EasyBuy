@@ -1,33 +1,43 @@
-import React from 'react'
-import styles from './HomePage.module.scss'
-import Filter from '../Filter/Filter'
-import ProductPage from '../ProductPage/ProductPage'
-import Navbar from '../Navbar/Navbar'
-import Footer from '../Footer/Footer'
-import { ToastContainer } from 'react-toastify'
+import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom';
+import styles from './HomePage.module.scss';
+import ProductCard from '../ProductCard/ProductCard'
+import Pagination from '../Pagination/Pagination';
 
 function HomePage() {
-  return (
-    <div>
-      <ToastContainer/>
-      <Navbar />
-      <div className='page-wrapper'>
-        <div className='content-area'>
-          <div className={`${styles['homePageContainer']} d-flex justify-content-center `}>
-              <div className={`row container-xxl d-flex justify-content-center p-0 m-0`}>
-                  <div className={`${styles['filterContainer']} col-4 p-0 m-0`}>
-                      <Filter/>
-                  </div>
-                  <div className={`${styles['productPageContainer']} col-8 p-0 m-0`}>
-                      <ProductPage/>
-                  </div>
-              </div>
-          </div>
+
+  const [searchParams,setSearchParams] = useSearchParams();
+  const [products, setProducts] = useState([]);
+  const [currentPageNo, setCurrentPageNo] = useState(searchParams.get('page') || 1)
+  const [totalPages, setTotalPages]= useState(1)
+
+
+  useEffect(() => {
+    const query = searchParams.toString();
+    fetch(`${import.meta.env.VITE_API_URL}/products?${query}`,{
+      method:'GET',credentials:'include'
+    })
+      .then(res => res.json())
+      .then(data => {
+        setProducts(data.products)
+        setCurrentPageNo(data.currentPage)
+        setTotalPages(data.totalPages)
+      })
+    }, [searchParams]);
+
+
+    return (
+      <div className={`${styles['productListContainer']} p-3` }>
+        <div className={`${styles['productCardContainer']} p-3`}>
+          {products.map((element,index)=>{
+            return <ProductCard key={element.productId} productDetail={element}/>
+          })}
         </div>
-        <Footer />
+        <div className={`d-flex justify-content-center`}>
+          <Pagination props={{currentPageNo, totalPages, searchParams, setSearchParams}}/>        
+        </div>
       </div>
-    </div>
-  )
-}
+    )
+  }
 
 export default HomePage

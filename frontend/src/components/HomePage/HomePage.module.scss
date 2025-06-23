@@ -1,17 +1,5 @@
-.homePageContainer{
-    background-color: black;
-    flex: 1;
-    //position:relative;
-    //top: 70px;
-    
-}
-
-@media (max-width:750px){
-    .filterContainer{
-        display: none;
-    }
-    
-    .productPageContainer{
-        width: 100% !important;
-    }
+.productCardContainer{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
 }
