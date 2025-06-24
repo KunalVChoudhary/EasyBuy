@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify'
 import CartPage from './components/CartPage/CartPage'
 import CartRoute from './components/CartRoute/CartRoute'
 import WishlistRoute from './components/WishlistRoute/WishlistRoute'
+import ProductRoute from './components/ProductRoute/ProductRoute'
 
 function App() {
   return (
@@ -26,12 +27,7 @@ function App() {
         </div>
       }/>
       <Route path='/' element={<HomeRoute />} />
-      <Route path='/productpage/:productId' element={
-        <div>
-          <ToastContainer position="top-right"/>
-          lol
-        </div>
-      }/>
+      <Route path='/productpage/:productId' element={<ProductRoute />}/>
 
       <Route path='/cart' element={<CartRoute />}/>
 
