@@ -72,7 +72,7 @@ export default function ProductCard({productDetail}) {
                     </button>
                 </div>
                 <div className={`card-body px-0 py-1`}>
-                    <h5 className={`card-title m-0 fs-5 text-truncate`} onClick={()=>{navigate(`/productpage?id=${productDetail._id}`)}}> {productDetail.title}</h5>
+                    <h5 className={`card-title m-0 fs-5 text-truncate`} onClick={()=>{navigate(`/productpage/${productDetail._id}`)}}> {productDetail.title}</h5>
                     <p className={`card-text fw-lighter m-0 mb-2`} onClick={()=>{navigate(`/productpage?id=${productDetail._id}`)}}>{productDetail.brand}</p>
                     <p className={`card-text lh-sm mb-1 ${styles.truncate2}`} onClick={()=>{navigate(`/productpage?id=${productDetail._id}`)}}>{productDetail.description}</p>
                     <div className='d-flex align-items-center mb-2' onClick={()=>{navigate(`/productpage?id=${productDetail._id}`)}}>

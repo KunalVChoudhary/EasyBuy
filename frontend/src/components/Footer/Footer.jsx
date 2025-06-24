@@ -38,10 +38,10 @@ export default function Footer() {
           <div className="col-12 col-md-3 text-center">
             <h6 className="fw-semibold mb-3">Follow Us</h6>
             <div className="d-flex justify-content-center gap-3 fs-5">
-              <a href="#" className="text-light"><img src="images/facebook-icon.png" alt="" /></a>
-              <a href="#" className="text-light"><img src="images/instagram-icon.png" alt="" /></a>
-              <a href="#" className="text-light"><img src="images/twitter-icon.png" alt="" /></a>
-              <a href="#" className="text-light"><img src="images/youtube-icon.png" alt="" /></a>
+              <a href="#" className="text-light"><img src="/images/facebook-icon.png" alt="" /></a>
+              <a href="#" className="text-light"><img src="/images/instagram-icon.png" alt="" /></a>
+              <a href="#" className="text-light"><img src="/images/twitter-icon.png" alt="" /></a>
+              <a href="#" className="text-light"><img src="/images/youtube-icon.png" alt="" /></a>
             </div>
           </div>
         </div>
