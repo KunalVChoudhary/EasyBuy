@@ -29,6 +29,12 @@ app.use(cors({
   credentials: true,
 }));
 
+app.use((req, res, next) => {
+  console.log("CORS request from:", req.headers.origin);
+  next();
+});
+
+
 app.use(cookieParser(`${process.env.COOKIE_SECRET}`))
 
 app.use(session({
