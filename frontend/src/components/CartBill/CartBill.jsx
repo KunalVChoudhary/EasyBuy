@@ -32,7 +32,7 @@ function CartBill({itemList}) {
         </div>
         <hr />
         <div className={`d-flex justify-content-center p-2 pt-3`}>
-          <button type="button" class="btn btn-warning px-3 py-1 fs-4 text-white">Place Order</button>
+          <button type="button" className="btn btn-warning px-3 py-1 fs-4 text-white">Place Order</button>
         </div>
       </div>
     </div>
