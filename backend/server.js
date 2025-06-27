@@ -25,14 +25,9 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 
 app.use(cors({
-  origin: [`${process.env.Client_URL}`],
+  origin: [`${process.env.CLIENT_URL}`],
   credentials: true,
 }));
-
-app.use((req, res, next) => {
-  console.log("CORS request from:", req.headers.origin);
-  next();
-});
 
 
 app.use(cookieParser(`${process.env.COOKIE_SECRET}`))
