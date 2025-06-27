@@ -48,6 +48,15 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.get('/debug-session', (req, res) => {
+  res.json({
+    cookie: req.headers.cookie,
+    session: req.session,
+    user: req.user,
+    isAuth: req.isAuthenticated?.() || false
+  });
+});
+
 app.use('/',route0,route1,route2,route3,route4)
 
 app.listen(process.env.PORT,()=>{console.log('Server Started');})
