@@ -17,7 +17,8 @@ route.get('/cart/len',async(req,res)=>{
     try{const user=await User.findOne({email:req.user.email})
     const userCart=await Cart.findOne({userId:user.id})
     return res.status(200).json(userCart.items.length)}
-    catch{
+    catch(err){
+        console.log(err);
         return res.status(401).json({message:'Please Login before accessing cart'})
     }
 })
