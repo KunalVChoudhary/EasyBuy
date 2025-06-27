@@ -1,3 +1,4 @@
+require('dotenv').config();
 const {Router}=require('express');
 const passport=require('passport');4
 const bcrypt =require('bcrypt')
@@ -44,7 +45,7 @@ route.post('/auth/signin', (req, res, next) => {
 
 
 route.get("/auth/google",
-    passport.authenticate("google", { scope: ["profile", "email"], prompt:'select_account' })
+    passport.authenticate("google", { scope: ["profile", "email"], prompt:'select_account',  })
 );
 
 route.get('/auth/google/pull',(req, res, next) => {
@@ -52,7 +53,7 @@ route.get('/auth/google/pull',(req, res, next) => {
         if (err || !user) {
             return res.send(`
                 <script>
-                    window.opener.postMessage({ success: false, message: 'Authentication failed' }, 'http://localhost:5173');
+                    window.opener.postMessage({ success: false, message: 'Authentication failed' }, '${process.env.CLIENT_URL}');
                     window.close();
                 </script>
             `);
@@ -62,7 +63,7 @@ route.get('/auth/google/pull',(req, res, next) => {
         if (err) {
             return res.send(`
                 <script>
-                    window.opener.postMessage({ success: false, message: 'Login failed' }, 'http://localhost:5173');
+                    window.opener.postMessage({ success: false, message: 'Login failed' }, '${process.env.CLIENT_URL}');
                     window.close();
                 </script>
             `);
@@ -71,7 +72,7 @@ route.get('/auth/google/pull',(req, res, next) => {
         return res.send(`
             <script>
                 window.opener.postMessage({ success: true, message: 'Authentication successful', user: ${JSON.stringify(user.name)} }, 
-                'http://localhost:5173');
+                '${process.env.CLIENT_URL}');
                 window.close();
             </script>
         `);

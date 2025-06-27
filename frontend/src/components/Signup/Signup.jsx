@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styles from './Signup.module.scss'
 import { setUserInfo } from '../../redux/createSlice/userInfoSlice'
+import { toast } from 'react-toastify'
 
 function Signup() {
 
@@ -54,7 +55,9 @@ function Signup() {
   }
 
   const handleGoogleSubmission = async (e)=>{
-    try {const popup = window.open(`${import.meta.env.VITE_API_URL}/auth/google`,"_blank","width=500,height=600");
+    try {
+    
+    const popup = window.open(`${import.meta.env.VITE_API_URL}/auth/google`,"_blank","width=500,height=600");
 
     const handleMessageEvent = async (e)=>{
       if (e.origin !== `${import.meta.env.VITE_API_URL}`) return;
