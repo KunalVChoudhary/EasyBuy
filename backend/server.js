@@ -25,14 +25,14 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 
 app.use(cors({
-  origin: ['http://localhost:5173','https://easybuy-frontend-8tne.onrender.com'],
+  origin: [`${process.env.Client_URL}`],
   credentials: true,
 }));
 
-app.use(cookieParser('i am cookie-parser for easybuy'))
+app.use(cookieParser(`${process.env.COOKIE_SECRET}`))
 
 app.use(session({
-    secret: 'i am easybuy session middleware',
+    secret: `${process.env.SESSION_SECRET}`,
     resave:false,
     saveUninitialized:false,
     cookie:{
@@ -49,6 +49,4 @@ app.use(passport.session())
 
 app.use('/',route0,route1,route2,route3,route4)
 
-
-const PORT = process.env.PORT;
-app.listen(PORT,()=>{console.log('Server Started');})
+app.listen(process.env.PORT,()=>{console.log('Server Started');})
