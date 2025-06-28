@@ -25,19 +25,20 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 
 app.use(cors({
-  origin: ['http://localhost:5173','https://easybuy-frontend-8tne.onrender.com'],
+  origin: [`${process.env.CLIENT_URL}`],
   credentials: true,
 }));
 
-app.use(cookieParser('i am cookie-parser for easybuy'))
+app.use(cookieParser(`${process.env.COOKIE_SECRET}`))
 
 app.use(session({
-    secret: 'i am easybuy session middleware',
+    secret: `${process.env.SESSION_SECRET}`,
     resave:false,
     saveUninitialized:false,
     cookie:{
         maxAge:6000000,
-        httpOnly:true
+        httpOnly:true,
+        sameSite:'none'
     },
     store:MongoStore.create({
         client: mongoose.connection.getClient(),
