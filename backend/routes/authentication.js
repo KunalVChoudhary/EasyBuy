@@ -36,7 +36,13 @@ route.post('/auth/signin', (req, res, next) => {
 
         req.logIn(user, (err) => {
             if (err) return next(err);
-            return res.status(200).json({ message: 'Login Successfull', user:user.name });
+            //return res.status(200).json({ message: 'Login Successfull', user:user.name });
+            req.session.save((err) => {
+                if (err) return next(err);
+                return res
+                .status(200)
+                .json({ message: 'Login Successful', user: user.name });
+            });
         });
     })(req, res, next);
 });
