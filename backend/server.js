@@ -36,9 +36,13 @@ app.use(session({
     resave:false,
     saveUninitialized:false,
     cookie:{
-        maxAge:6000000,
-        httpOnly:true,
-        sameSite:'none'
+        httpOnly: true,              
+        secure: true,                
+        sameSite: 'none',            
+        domain: '.onrender.com',     
+        path: '/',                   
+        maxAge: 1000 * 60 * 60 * 24,
+        priority: 'high'
     },
     store:MongoStore.create({
         client: mongoose.connection.getClient(),

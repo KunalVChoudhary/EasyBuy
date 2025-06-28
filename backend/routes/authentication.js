@@ -53,7 +53,7 @@ route.get('/auth/google/pull',(req, res, next) => {
         if (err || !user) {
             return res.send(`
                 <script>
-                    window.opener.postMessage({ success: false, message: 'Authentication failed' }, ${process.env.CLIENT_URL});
+                    window.opener.postMessage({ success: false, message: 'Authentication failed' }, '${process.env.CLIENT_URL}');
                     window.close();
                 </script>
             `);
@@ -63,7 +63,7 @@ route.get('/auth/google/pull',(req, res, next) => {
         if (err) {
             return res.send(`
                 <script>
-                    window.opener.postMessage({ success: false, message: 'Login failed' }, ${process.env.CLIENT_URL});
+                    window.opener.postMessage({ success: false, message: 'Login failed' },' ${process.env.CLIENT_URL}');
                     window.close();
                 </script>
             `);
@@ -72,7 +72,7 @@ route.get('/auth/google/pull',(req, res, next) => {
         return res.send(`
             <script>
                 window.opener.postMessage({ success: true, message: 'Authentication successful', user: ${JSON.stringify(user.name)} }, 
-                ${process.env.CLIENT_URL});
+                '${process.env.CLIENT_URL}');
                 window.close();
             </script>
         `);
