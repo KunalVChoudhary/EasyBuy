@@ -19,7 +19,13 @@ route.post('/auth/signup',async(req,res)=>{
             if (err) {
                 return res.status(500).json({ message: 'Login failed after registration' });
             }
-            return res.status(200).json({ message: 'Login Successfull', user:name });
+            //return res.status(200).json({ message: 'Login Successfull', user:name });
+            req.session.save((err) => {
+                if (err) return next(err);
+                return res
+                .status(200)
+                .json({ message: 'Login Successfull', user:name });
+            });
         });
     }
     catch{
@@ -75,13 +81,42 @@ route.get('/auth/google/pull',(req, res, next) => {
             `);
         }
 
-        return res.send(`
+        req.session.save((err) => {
+        if (err) {
+          // fallback to failure if save() blows up
+          return res.send(`
             <script>
-                window.opener.postMessage({ success: true, message: 'Authentication successful', user: ${JSON.stringify(user.name)} }, 
-                '${process.env.CLIENT_URL}');
-                window.close();
+              window.opener.postMessage(
+                { success: false, message: 'Session save failed' },
+                '${process.env.CLIENT_URL}'
+              );
+              window.close();
             </script>
+          `);
+        }
+
+        // now cookie is in the response, browser will store it
+        return res.send(`
+          <script>
+            window.opener.postMessage(
+              {
+                success: true,
+                message: 'Authentication successful',
+                user: ${JSON.stringify(user.name)}
+              },
+              '${process.env.CLIENT_URL}'
+            );
+            window.close();
+          </script>
         `);
+        });
+        // return res.send(`
+        //     <script>
+        //         window.opener.postMessage({ success: true, message: 'Authentication successful', user: ${JSON.stringify(user.name)} }, 
+        //         '${process.env.CLIENT_URL}');
+        //         window.close();
+        //     </script>
+        // `);
         });
     })(req, res, next);
 })
@@ -93,7 +128,13 @@ route.get('/signout',(req,res)=>{
             if (err) {
                 return res.status(400).json({'attempt': false}); 
             }
-            res.clearCookie('connect.sid'); 
+            res.clearCookie('connect.sid', {
+            domain: '.onrender.com',
+            path: '/',                         
+            secure: true,                     
+            httpOnly: true,                    
+            sameSite: 'none'                   
+            }); 
             res.status(200).json({'attempt': true});})
     });
 });

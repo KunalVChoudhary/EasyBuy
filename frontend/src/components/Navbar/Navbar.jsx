@@ -117,9 +117,10 @@ export default function Navbar(){
                         <img className={`d-inline px-2`} src={`/images/cart-dark-icon.png`} alt="" />
                     </div>
                     {!userName?
-                    <div className={`${styles["Signup-Login-container"]} d-flex align-items-center p-4`}>
-                        <div className={`h5 m-0`}>Signup/Login</div>
-                    </div>
+                    <>
+                        <div className='d-flex align-items-center' onClick={()=>{navigate('/signup')}}><p className={`h5 m-0 px-2`}>Signup</p></div>
+                        <div className='d-flex align-items-center' onClick={()=>{navigate('/login')}}><p className={`h5 m-0 ps-2 pe-1`}>Login</p></div>
+                    </>
                     :
                     <div className={`${styles["user-info-container"]} d-flex align-items-center p-4`}>
                         <div className={`d-flex`}>
