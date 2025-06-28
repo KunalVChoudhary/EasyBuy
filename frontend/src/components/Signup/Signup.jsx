@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styles from './Signup.module.scss'
 import { setUserInfo } from '../../redux/createSlice/userInfoSlice'
+import { toast } from 'react-toastify';
 
 function Signup() {
 
