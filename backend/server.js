@@ -21,6 +21,8 @@ mongoose.connect(process.env.MONGO_URL).then(()=>{
     seedingDatabase();})
 
 //middleware
+app.set('trust proxy', 1);
+
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 
