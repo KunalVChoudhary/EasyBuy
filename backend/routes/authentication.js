@@ -1,3 +1,4 @@
+require('dotenv').config();
 const {Router}=require('express');
 const passport=require('passport');4
 const bcrypt =require('bcrypt')
