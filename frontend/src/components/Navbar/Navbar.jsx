@@ -109,10 +109,10 @@ export default function Navbar(){
                 </div>
             </div>
             <div className={`${styles["container-4"]} ${styles[displayTheme]} justify-content-evenly`}>
-                    <div className={`${styles["wishlist-container"]} d-flex align-items-center p-4`}>
+                    <div className={`${styles["wishlist-container"]} d-flex align-items-center p-4`} onClick={()=>{navigate('/wishlist')}}>
                         <img className={`d-inline px-2`} src="/images/wishlist-icon.png" alt="" />
                     </div>
-                    <div className={`${styles["cart-container"]} d-flex justify-content-center flex-column p-4`}>
+                    <div className={`${styles["cart-container"]} d-flex justify-content-center flex-column p-4`} onClick={()=>{navigate('/cart')}}>
                         <p className={`d-inline px-2 m-0 text-center`} style={{position: 'relative',top: '2px'}}>{data || 0}</p>
                         <img className={`d-inline px-2`} src={`/images/cart-dark-icon.png`} alt="" />
                     </div>
