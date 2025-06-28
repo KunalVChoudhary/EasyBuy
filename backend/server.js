@@ -42,7 +42,8 @@ app.use(session({
         maxAge:1000*60*60*24,
         httpOnly:true,
         secure:true,
-        sameSite:'none'
+        sameSite:'none',
+        domain: '.onrender.com', 
     },
     store:MongoStore.create({
         client: mongoose.connection.getClient(),
