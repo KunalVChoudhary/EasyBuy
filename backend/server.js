@@ -24,6 +24,8 @@ mongoose.connect(process.env.MONGO_URL).then(()=>{
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 
+app.set('trust proxy', 1);
+
 app.use(cors({
   origin: [`${process.env.CLIENT_URL}`],
   credentials: true,
